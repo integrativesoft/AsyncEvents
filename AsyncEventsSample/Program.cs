@@ -20,13 +20,13 @@ namespace AsyncEventsSample
         static async Task Main()
         {
             Console.WriteLine("Hello World!");
-            source.CounterChanged.Subscribe(ShowCounter);
-            await source.Increase();
+            source.OnChangeAsync.Subscribe(ShowCounterAsync);
+            await source.IncreaseAsync();
             Console.WriteLine("Done!");
         }
 
         // handler for events
-        static Task ShowCounter(object sender, CounterChangedEventArgs args)
+        static Task ShowCounterAsync(object sender, CounterChangedEventArgs args)
         {
             Console.WriteLine($"Counter value: {args.Counter}");
             return Task.CompletedTask;
@@ -45,13 +45,14 @@ namespace AsyncEventsSample
         int counter;
 
         // async event declaration
-        public AsyncEvent<CounterChangedEventArgs> CounterChanged { get; } = new AsyncEvent<CounterChangedEventArgs>();
+        public AsyncEvent<CounterChangedEventArgs> OnChangeAsync { get; }
+            = new AsyncEvent<CounterChangedEventArgs>();
 
         // method that triggers events
-        public async Task Increase()
+        public async Task IncreaseAsync()
         {
             counter++;
-            await CounterChanged.InvokeAsync(this, new CounterChangedEventArgs
+            await OnChangeAsync.InvokeAsync(this, new CounterChangedEventArgs
             {
                 Counter = counter
             });
