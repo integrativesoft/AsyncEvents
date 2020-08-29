@@ -7,7 +7,7 @@ This library adds support for asynchronous events in C#
 public event MyEvent OnChange;
 
 // AFTER: Declaration for an asynchronous event:
-public AsyncEvent MyAsyncEvent OnChangeAsync { get; } = new AsyncEvent();
+public AsyncEvent OnChangeAsync { get; } = new AsyncEvent();
 ```
 
 # Sample application
